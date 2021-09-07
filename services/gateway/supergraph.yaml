@@ -1,0 +1,13 @@
+subgraphs:
+  auth:
+    routing_url: http://localhost:5001/graphql
+    schema:
+      file: ../auth/subgraph/subgraph.graphql
+  characters:
+    routing_url: http://localhost:5002/graphql
+    schema:
+      file: ../characters/subgraph/subgraph.graphql
+  pick-a-rick:
+    routing_url: http://localhost:5003/graphql
+    schema:
+      file: ../pick-a-rick/subgraph/subgraph.graphql

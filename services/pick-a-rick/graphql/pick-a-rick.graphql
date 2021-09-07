@@ -1,0 +1,25 @@
+type RicksPicks @key(fields: "id") {
+  id: ID!
+  user: User
+  character: Character
+}
+
+extend type User @key(fields: "id") {
+  id: ID! @external
+}
+
+extend type Character @key(fields: "id") {
+  id: ID! @external
+  species: String @external
+  status: String @external
+  speciesStatus: String @requires(fields: "species status")
+  ricksPicks: [RicksPicks]
+}
+
+extend type Query {
+  listRicksPicks: [RicksPicks]
+}
+
+extend type Mutation {
+  pickARick(characterId: String): RicksPicks
+}

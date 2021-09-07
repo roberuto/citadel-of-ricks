@@ -1,0 +1,36 @@
+{
+  "name": "characters",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon",
+    "schema-generate": "ts-node ./scripts/schema-compose.ts",
+    "schema-upload": "ts-node ./scripts/schema-upload",
+    "schema-types": "npx graphql-codegen"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/federation": "^0.29.0",
+    "@graphql-codegen/typescript": "^2.0.0",
+    "@graphql-codegen/typescript-resolvers": "^2.0.0",
+    "apollo-server-core": "^3.1.2",
+    "apollo-server-express": "^3.1.2",
+    "apollo-server-types": "^3.1.1",
+    "awilix": "^5.0.0",
+    "express": "^4.17.1",
+    "graphql": "^15.5.1",
+    "helmet": "^4.6.0",
+    "node-fetch": "^2.6.1",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@apollo/rover": "^0.2.0",
+    "@graphql-codegen/cli": "^2.0.1",
+    "@types/node-fetch": "^2.5.12",
+    "nodemon": "^2.0.12",
+    "ts-node": "^10.2.0",
+    "typescript": "^4.3.5"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "citadel-of-ricks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "start-services": "lerna run --scope auth --scope characters --scope pick-a-rick start --stream",
+    "start-gateway": "lerna run --scope gateway start --stream",
+    "schema-generate": "lerna run  --scope auth --scope characters  --scope pick-a-rick schema-generate",
+    "schema-upload": "lerna run  --scope auth --scope characters  --scope pick-a-rick schema-upload",
+    "schema-compose": "lerna run --scope gateway schema-compose"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^6.2.1",
+    "lerna": "^4.0.0",
+    "nodemon": "^2.0.12"
+  }
+}

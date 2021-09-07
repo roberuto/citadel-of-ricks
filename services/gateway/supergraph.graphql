@@ -1,0 +1,94 @@
+schema
+  @core(feature: "https://specs.apollo.dev/core/v0.1"),
+  @core(feature: "https://specs.apollo.dev/join/v0.1")
+{
+  query: Query
+  mutation: Mutation
+}
+
+directive @core(feature: String!) repeatable on SCHEMA
+
+directive @join__field(graph: join__Graph, requires: join__FieldSet, provides: join__FieldSet) on FIELD_DEFINITION
+
+directive @join__type(graph: join__Graph!, key: join__FieldSet) repeatable on OBJECT | INTERFACE
+
+directive @join__owner(graph: join__Graph!) on OBJECT | INTERFACE
+
+directive @join__graph(name: String!, url: String!) on ENUM_VALUE
+
+type Auth {
+  token: String!
+}
+
+input AuthInput {
+  email: String!
+  password: String!
+}
+
+type Character
+  @join__owner(graph: CHARACTERS)
+  @join__type(graph: CHARACTERS, key: "id")
+  @join__type(graph: PICK_A_RICK, key: "id")
+{
+  created: String @join__field(graph: CHARACTERS)
+  gender: String @join__field(graph: CHARACTERS)
+  id: ID! @join__field(graph: CHARACTERS)
+  image: String @join__field(graph: CHARACTERS)
+  name: String @join__field(graph: CHARACTERS)
+  ricksPicks: [RicksPicks] @join__field(graph: PICK_A_RICK)
+  species: String @join__field(graph: CHARACTERS)
+  speciesStatus: String @join__field(graph: PICK_A_RICK, requires: "species status")
+  status: String @join__field(graph: CHARACTERS)
+  type: String @join__field(graph: CHARACTERS)
+}
+
+type Characters {
+  info: Info
+  results: [Character]
+}
+
+type Info {
+  count: Int
+  next: Int
+  pages: Int
+  prev: Int
+}
+
+scalar join__FieldSet
+
+enum join__Graph {
+  AUTH @join__graph(name: "auth" url: "http://localhost:5001/graphql")
+  CHARACTERS @join__graph(name: "characters" url: "http://localhost:5002/graphql")
+  PICK_A_RICK @join__graph(name: "pick-a-rick" url: "http://localhost:5003/graphql")
+}
+
+type Mutation {
+  login(input: AuthInput!): Auth! @join__field(graph: AUTH)
+  pickARick(characterId: String): RicksPicks @join__field(graph: PICK_A_RICK)
+  signUp(input: AuthInput!): Auth! @join__field(graph: AUTH)
+}
+
+type Query {
+  getCharacter(id: ID!): Character @join__field(graph: CHARACTERS)
+  listCharacters(page: Int): Characters @join__field(graph: CHARACTERS)
+  listRicksPicks: [RicksPicks] @join__field(graph: PICK_A_RICK)
+  me: User @join__field(graph: AUTH)
+}
+
+type RicksPicks
+  @join__owner(graph: PICK_A_RICK)
+  @join__type(graph: PICK_A_RICK, key: "id")
+{
+  character: Character @join__field(graph: PICK_A_RICK)
+  id: ID! @join__field(graph: PICK_A_RICK)
+  user: User @join__field(graph: PICK_A_RICK)
+}
+
+type User
+  @join__owner(graph: AUTH)
+  @join__type(graph: AUTH, key: "id")
+  @join__type(graph: PICK_A_RICK, key: "id")
+{
+  email: String @join__field(graph: AUTH)
+  id: ID! @join__field(graph: AUTH)
+}

@@ -1,0 +1,27 @@
+type Character @key(fields: "id") {
+  id: ID!
+  name: String
+  status: String
+  species: String
+  type: String
+  gender: String
+  image: String
+  created: String
+}
+
+type Info {
+  count: Int
+  pages: Int
+  next: Int
+  prev: Int
+}
+
+type Characters {
+  info: Info
+  results: [Character]
+}
+
+extend type Query {
+  getCharacter(id: ID!): Character
+  listCharacters(page: Int): Characters
+}
